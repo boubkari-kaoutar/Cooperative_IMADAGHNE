@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { Facebook, Instagram, MessageCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -11,6 +12,7 @@ const whatsappMsg = encodeURIComponent(
 
 export default function Footer() {
   const { t } = useLanguage();
+  const router = useRouter();
 
   const navLinks = [
     { label: t("nav.home"), href: "#accueil" },
@@ -19,19 +21,16 @@ export default function Footer() {
     { label: t("nav.contact"), href: "#contact" },
   ];
 
-  const rawBS = (t("products.bestSellers") as unknown as any[]) || [];
-  const products = [
-    rawBS[0]?.name || "Huile d'Argan Pure",
-    rawBS[1]?.name || "Miel Naturel",
-    rawBS[2]?.name || "Amlou",
-    "Plantes Médicinales",
-    "Savon Artisanal",
-    "Eau de Rose",
-  ];
+  const rawCol = (t("products.collection") as unknown as any[]) || [];
+  const products = rawCol.map((item: any) => item?.name || "");
 
   const handleNavClick = (href: string) => {
     const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      router.push(`/${href}`);
+    }
   };
 
   return (

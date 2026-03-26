@@ -235,7 +235,7 @@ export default function ContactSection() {
                 <div className="text-xs font-bold uppercase tracking-widest mb-1 text-[#895F37]">
                   {card.label}
                 </div>
-                <div className="text-base font-bold text-[#2B2B2B] leading-tight mb-1" style={{ fontFamily: "'Playfair Display', serif" }}>
+                <div className="text-base font-bold text-[#2B2B2B] leading-tight mb-1" dir="ltr" style={{ fontFamily: "'Playfair Display', serif" }}>
                   {card.value}
                 </div>
                 <div className="text-sm font-medium opacity-60">

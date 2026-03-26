@@ -6,7 +6,8 @@ export const ar = {
     contact: "تواصل معنا",
     menu: "القائمة",
     whyUs: "لماذا نحن",
-    gallery: "معرض الصور"
+    gallery: "معرض الصور",
+    contactUs: "تواصل معنا"
   },
   hero: {
     line1: "المذاق الأصيل",
@@ -140,7 +141,7 @@ export const ar = {
     nav: "القائمة",
     products: "منتجاتنا",
     rights: "© 2026 التعاونية الفلاحية إيماضغن. جميع الحقوق محفوظة.",
-    made: "🌿 صُنع بحب في المغرب"
+    made: "صُنع بحب في المغرب"
   },
   galerie: {
     heroTitle1: "معرض",

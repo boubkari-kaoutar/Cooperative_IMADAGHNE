@@ -6,7 +6,8 @@ export const fr = {
     contact: "Contact",
     menu: "Menu",
     whyUs: "Pourquoi Nous",
-    gallery: "Galerie"
+    gallery: "Galerie",
+    contactUs: "Nous contacter"
   },
   hero: {
     line1: "Le Goût Authentique",
@@ -140,7 +141,7 @@ export const fr = {
     nav: "Navigation",
     products: "Nos Produits",
     rights: "© 2026 Coopérative Agricole Imadaghne. Tous droits réservés.",
-    made: "🌿 Fait avec amour au Maroc"
+    made: "Fait avec amour au Maroc"
   },
   galerie: {
     heroTitle1: "Notre",
