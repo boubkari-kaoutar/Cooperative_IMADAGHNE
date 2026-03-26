@@ -382,24 +382,36 @@ export default function ProductsSection() {
         <div className="lg:hidden max-w-7xl mx-auto px-6 pb-16">
           <div className="grid sm:grid-cols-2 gap-5">
             {collection.map((p, i) => (
-              <div key={i} className="group relative overflow-hidden rounded-2xl" style={{ height: 280 }}>
-                <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105"
-                  style={{ background: p.accent + "33" }} />
+              <div key={i} className="group relative overflow-hidden rounded-2xl" style={{ height: 320 }}>
+                {/* Real image */}
+                <Image
+                  src={p.image}
+                  alt={p.name}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 640px) 100vw, 50vw"
+                />
+                {/* Overlay */}
                 <div className="absolute inset-0" style={{
-                  background: "linear-gradient(to top, rgba(7,7,10,0.72) 30%, transparent 100%)",
+                  background: "linear-gradient(to top, rgba(7,7,10,0.80) 35%, rgba(7,7,10,0.08) 100%)",
                 }} />
+                {/* Top accent bar */}
                 <div className="absolute top-0 left-0 right-0 h-[3px] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"
                   style={{ background: p.accent }} />
+                {/* Content */}
                 <div className="absolute inset-0 p-6 flex flex-col justify-between">
                   <span className="inline-block self-start px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white rounded-full"
-                    style={{ background: `${p.accent}88` }}>
+                    style={{ background: `${p.accent}99`, backdropFilter: "blur(4px)" }}>
                     {p.tag}
                   </span>
                   <div>
                     <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 20,
-                      fontWeight: 700, color: "#FBF7F2", marginBottom: 6 }}>{p.name}</h3>
-                    <p style={{ fontSize: 11, color: "rgba(251,247,242,0.38)",
-                      fontFamily: "'Plus Jakarta Sans', sans-serif", letterSpacing: "0.1em",
+                      fontWeight: 700, color: "#FBF7F2", marginBottom: 6, lineHeight: 1.2 }}>{p.name}</h3>
+                    <p style={{ fontSize: 13, color: "rgba(251,247,242,0.65)",
+                      fontFamily: "'Plus Jakarta Sans', sans-serif", marginBottom: 6,
+                      lineHeight: 1.6 }}>{p.desc}</p>
+                    <p style={{ fontSize: 10, color: "rgba(251,247,242,0.35)",
+                      fontFamily: "'Plus Jakarta Sans', sans-serif", letterSpacing: "0.12em",
                       textTransform: "uppercase" as const }}>{p.meta}</p>
                   </div>
                 </div>

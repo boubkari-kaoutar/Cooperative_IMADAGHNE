@@ -92,26 +92,6 @@ export default function Preloader() {
         }}
       />
 
-      {/* Floating leaf shapes */}
-      <div
-        className="leaf-float absolute top-1/4 left-1/6 text-5xl opacity-20 select-none pointer-events-none"
-        style={{ animationDelay: "0s" }}
-      >
-        🌿
-      </div>
-      <div
-        className="leaf-float absolute bottom-1/3 right-1/5 text-4xl opacity-15 select-none pointer-events-none"
-        style={{ animationDelay: "2s" }}
-      >
-        🍃
-      </div>
-      <div
-        className="leaf-float absolute top-1/3 right-1/4 text-3xl opacity-10 select-none pointer-events-none"
-        style={{ animationDelay: "4s" }}
-      >
-        🌱
-      </div>
-
       {/* Logo */}
       <div ref={logoRef} className="relative mb-6" style={{ opacity: 0 }}>
         <div

@@ -152,9 +152,9 @@ export default function AboutPage() {
         </div>
 
         {/* Wave */}
-        <div className="absolute bottom-0 left-0 right-0 pointer-events-none" style={{ lineHeight: 0 }}>
-          <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style={{ width: "100%", height: 60 }}>
-            <path d="M0,40 C360,80 1080,0 1440,40 L1440,60 L0,60 Z" fill="#FBF7F2" />
+        <div className="absolute bottom-0 left-0 right-0 pointer-events-none" style={{ lineHeight: 0, zIndex: 10 }}>
+          <svg viewBox="0 0 1440 90" preserveAspectRatio="none" style={{ width: "100%", height: 90 }}>
+            <path d="M0,60 C480,100 960,20 1440,60 L1440,90 L0,90 Z" fill="#FBF7F2" />
           </svg>
         </div>
       </div>
@@ -270,11 +270,10 @@ export default function AboutPage() {
             >
               {/* Visual side — video */}
               <div
-                className="relative flex items-center justify-center flex-shrink-0 overflow-hidden"
+                className="relative flex-shrink-0 overflow-hidden w-full lg:w-[clamp(160px,22vw,260px)] border-b lg:border-b-0 lg:border-r"
                 style={{
-                  width: "clamp(160px,22vw,260px)",
-                  minHeight: "clamp(140px,18vw,220px)",
-                  borderRight: `1px solid ${border}`,
+                  minHeight: "clamp(220px,28vw,280px)",
+                  borderColor: border,
                 }}
               >
                 <video
