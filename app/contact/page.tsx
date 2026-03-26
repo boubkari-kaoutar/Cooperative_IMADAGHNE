@@ -111,8 +111,8 @@ export default function ContactPage() {
 
   const getStyle = (fieldObj: "name" | "email" | "message" | "other") => ({
     ...IS,
-    borderColor: (fieldObj !== "other" && errors[fieldObj]) ? "#E02424" : IS.border,
-  });
+    borderColor: (fieldObj !== "other" && errors[fieldObj]) ? "#E02424" : "rgba(137, 95, 55, 0.2)",
+  } as React.CSSProperties);
 
   const focus = (e: React.FocusEvent<Element>) => {
     (e.currentTarget as HTMLElement).style.borderColor = "#167033";
