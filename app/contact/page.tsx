@@ -112,8 +112,19 @@ export default function ContactPage() {
   };
 
   const getStyle = (fieldObj: "name" | "email" | "message" | "other"): React.CSSProperties => ({
-    ...IS,
+    width: "100%",
+    background: "rgba(251,247,242,0.6)",
+    borderWidth: "1px",
+    borderStyle: "solid",
     borderColor: (fieldObj !== "other" && errors[fieldObj]) ? "#E02424" : DEFAULT_BORDER_COLOR,
+    color: "#2B2B2B",
+    padding: "16px 20px",
+    fontSize: 15,
+    outline: "none",
+    borderRadius: "12px",
+    appearance: "none" as const,
+    fontFamily: "'Plus Jakarta Sans', sans-serif",
+    transition: "all 0.3s ease",
   });
 
   const focus = (e: React.FocusEvent<Element>) => {
