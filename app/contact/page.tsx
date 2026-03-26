@@ -114,11 +114,11 @@ export default function ContactPage() {
     borderColor: (fieldObj !== "other" && errors[fieldObj]) ? "#E02424" : IS.border,
   });
 
-  const focus = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const focus = (e: React.FocusEvent<Element>) => {
     (e.currentTarget as HTMLElement).style.borderColor = "#167033";
     (e.currentTarget as HTMLElement).style.background = "#FFFFFF";
   };
-  const blur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>, fieldName: "name" | "email" | "message" | "other" = "other") => {
+  const blur = (e: React.FocusEvent<Element>, fieldName: "name" | "email" | "message" | "other" = "other") => {
     if (fieldName !== "other" && errors[fieldName]) {
       (e.currentTarget as HTMLElement).style.borderColor = "#E02424";
     } else {
