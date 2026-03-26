@@ -8,9 +8,11 @@ if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
 
 import { useLanguage } from "@/context/LanguageContext";
 
+const DEFAULT_BORDER_COLOR = "rgba(137, 95, 55, 0.2)";
 const IS: React.CSSProperties = {
   width: "100%", background: "rgba(251,247,242,0.6)",
-  border: "1px solid rgba(137, 95, 55, 0.2)", color: "#2B2B2B",
+  borderWidth: "1px", borderStyle: "solid", borderColor: DEFAULT_BORDER_COLOR,
+  color: "#2B2B2B",
   padding: "16px 20px", fontSize: 15, outline: "none",
   borderRadius: "12px", appearance: "none", fontFamily: "'Plus Jakarta Sans', sans-serif",
   transition: "all 0.3s ease",
@@ -103,20 +105,21 @@ export default function ContactSection() {
     if(errors[k as keyof typeof errors]) setErrors(p => ({...p, [k]: undefined}));
   };
 
-  const getStyle = (fieldObj: "name" | "email" | "message" | "other") => ({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const getStyle = (fieldObj: "name" | "email" | "message" | "other"): any => ({
     ...IS,
-    borderColor: (fieldObj !== "other" && errors[fieldObj]) ? "#E02424" : IS.border,
+    borderColor: (fieldObj !== "other" && errors[fieldObj]) ? "#E02424" : DEFAULT_BORDER_COLOR,
   });
 
-  const focus = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const focus = (e: React.FocusEvent<Element>) => {
     (e.currentTarget as HTMLElement).style.borderColor = "#167033";
     (e.currentTarget as HTMLElement).style.background = "#FFFFFF";
   };
-  const blur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>, fieldName: "name" | "email" | "message" | "other" = "other") => {
+  const blur = (e: React.FocusEvent<Element>, fieldName: "name" | "email" | "message" | "other" = "other") => {
     if (fieldName !== "other" && errors[fieldName]) {
       (e.currentTarget as HTMLElement).style.borderColor = "#E02424";
     } else {
-      (e.currentTarget as HTMLElement).style.borderColor = "rgba(137, 95, 55, 0.2)";
+      (e.currentTarget as HTMLElement).style.borderColor = DEFAULT_BORDER_COLOR;
     }
     (e.currentTarget as HTMLElement).style.background = "rgba(251,247,242,0.6)";
   };

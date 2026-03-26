@@ -111,7 +111,8 @@ export default function ContactPage() {
     if(errors[k as keyof typeof errors]) setErrors(p => ({...p, [k]: undefined}));
   };
 
-  const getStyle = (fieldObj: "name" | "email" | "message" | "other"): React.CSSProperties => ({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const getStyle = (fieldObj: "name" | "email" | "message" | "other"): any => ({
     width: "100%",
     background: "rgba(251,247,242,0.6)",
     borderWidth: "1px",
@@ -122,7 +123,7 @@ export default function ContactPage() {
     fontSize: 15,
     outline: "none",
     borderRadius: "12px",
-    appearance: "none" as const,
+    appearance: "none",
     fontFamily: "'Plus Jakarta Sans', sans-serif",
     transition: "all 0.3s ease",
   });
