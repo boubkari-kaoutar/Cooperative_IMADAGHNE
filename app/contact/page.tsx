@@ -9,9 +9,11 @@ if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
 
 import { useLanguage } from "@/context/LanguageContext";
 
+const DEFAULT_BORDER_COLOR = "rgba(137, 95, 55, 0.2)";
 const IS: React.CSSProperties = {
   width: "100%", background: "rgba(251,247,242,0.6)",
-  border: "1px solid rgba(137, 95, 55, 0.2)", color: "#2B2B2B",
+  borderWidth: "1px", borderStyle: "solid", borderColor: DEFAULT_BORDER_COLOR,
+  color: "#2B2B2B",
   padding: "16px 20px", fontSize: 15, outline: "none",
   borderRadius: "12px", appearance: "none", fontFamily: "'Plus Jakarta Sans', sans-serif",
   transition: "all 0.3s ease",
@@ -109,10 +111,10 @@ export default function ContactPage() {
     if(errors[k as keyof typeof errors]) setErrors(p => ({...p, [k]: undefined}));
   };
 
-  const getStyle = (fieldObj: "name" | "email" | "message" | "other") => ({
+  const getStyle = (fieldObj: "name" | "email" | "message" | "other"): React.CSSProperties => ({
     ...IS,
-    borderColor: (fieldObj !== "other" && errors[fieldObj]) ? "#E02424" : "rgba(137, 95, 55, 0.2)",
-  } as React.CSSProperties);
+    borderColor: (fieldObj !== "other" && errors[fieldObj]) ? "#E02424" : DEFAULT_BORDER_COLOR,
+  });
 
   const focus = (e: React.FocusEvent<Element>) => {
     (e.currentTarget as HTMLElement).style.borderColor = "#167033";
