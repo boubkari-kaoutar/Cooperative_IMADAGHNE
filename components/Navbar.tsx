@@ -3,12 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
-import SlideToContact from "@/components/SlideToContact";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function Navbar() {
   const { t, lang, toggleLanguage } = useLanguage();
+  const pathname = usePathname();
 
   const sections = [
     { label: t("nav.home"),       href: "/",         num: "01", external: true  },
@@ -139,19 +140,8 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* CENTER — pill group */}
-          <div className="hidden md:flex items-center gap-2">
-
-            {/* Slide to contact */}
-            <SlideToContact
-              scrolled={scrolled}
-              onComplete={() => {
-                setMenuOpen(false);
-                window.location.href = "/contact";
-              }}
-            />
-
-            {/* Services + Produits — single pill container */}
+          {/* CENTER — all nav links */}
+          <div className="hidden lg:flex items-center gap-3">
             <div
               className="flex items-center"
               style={{
@@ -162,52 +152,47 @@ export default function Navbar() {
                 overflow: "hidden",
               }}
             >
-              <Link
-                href="/about"
-                style={{
-                  padding: "8px 18px",
-                  fontSize: "13px",
-                  fontWeight: 600,
-                  fontFamily: "'Plus Jakarta Sans', sans-serif",
-                  color: scrolled ? "#167033" : "#FBF7F2",
-                  whiteSpace: "nowrap",
-                  textDecoration: "none",
-                  display: "block",
-                  transition: "opacity 0.2s",
-                }}
-                onMouseEnter={e => (e.currentTarget.style.opacity = "0.65")}
-                onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
-              >
-                {t("nav.about")}
-              </Link>
-
-              {/* Divider */}
-              <span style={{
-                width: 1,
-                height: 16,
-                backgroundColor: scrolled ? "rgba(22,112,51,0.25)" : "rgba(251,247,242,0.3)",
-                flexShrink: 0,
-              }} />
-
-              <Link
-                href="/produits"
-                style={{
-                  padding: "8px 18px",
-                  fontSize: "13px",
-                  fontWeight: 600,
-                  fontFamily: "'Plus Jakarta Sans', sans-serif",
-                  color: scrolled ? "#167033" : "#FBF7F2",
-                  whiteSpace: "nowrap",
-                  textDecoration: "none",
-                  display: "block",
-                  transition: "opacity 0.2s",
-                }}
-                onMouseEnter={e => (e.currentTarget.style.opacity = "0.65")}
-                onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
-              >
-                {t("nav.products")}
-              </Link>
+              {sections.map((s, i) => {
+                const isActive = s.href === "/" ? pathname === "/" : pathname.startsWith(s.href);
+                return (
+                  <div key={s.href} className="flex items-center">
+                    {i > 0 && (
+                      <span style={{
+                        width: 1,
+                        height: 14,
+                        backgroundColor: scrolled ? "rgba(22,112,51,0.25)" : "rgba(251,247,242,0.3)",
+                        flexShrink: 0,
+                      }} />
+                    )}
+                    <Link
+                      href={s.href}
+                      style={{
+                        padding: "8px 15px",
+                        fontSize: "12.5px",
+                        fontWeight: isActive ? 700 : 600,
+                        fontFamily: "'Plus Jakarta Sans', sans-serif",
+                        color: isActive
+                          ? (scrolled ? "#167033" : "#FBF7F2")
+                          : (scrolled ? "rgba(22,112,51,0.55)" : "rgba(251,247,242,0.55)"),
+                        whiteSpace: "nowrap",
+                        textDecoration: "none",
+                        display: "block",
+                        transition: "color 0.2s, opacity 0.2s",
+                        position: "relative",
+                        background: isActive
+                          ? (scrolled ? "rgba(22,112,51,0.12)" : "rgba(251,247,242,0.15)")
+                          : "transparent",
+                      }}
+                      onMouseEnter={e => { if (!isActive) e.currentTarget.style.color = scrolled ? "#167033" : "#FBF7F2"; }}
+                      onMouseLeave={e => { if (!isActive) e.currentTarget.style.color = scrolled ? "rgba(22,112,51,0.55)" : "rgba(251,247,242,0.55)"; }}
+                    >
+                      {s.label}
+                    </Link>
+                  </div>
+                );
+              })}
             </div>
+
           </div>
 
           {/* RIGHT — Lang Toggle + Menu */}
@@ -228,7 +213,7 @@ export default function Navbar() {
 
             <button
               onClick={() => setMenuOpen((o) => !o)}
-            className="flex items-center gap-2 transition-all duration-300 group"
+            className="lg:hidden flex items-center gap-2 transition-all duration-300 group"
             style={{
               color: menuOpen ? "#FBF7F2" : (scrolled ? "#1A0F08" : "#FBF7F2"),
               fontFamily: "'Plus Jakarta Sans', sans-serif",
