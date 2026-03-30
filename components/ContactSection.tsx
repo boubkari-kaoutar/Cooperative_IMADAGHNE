@@ -43,45 +43,24 @@ export default function ContactSection() {
   const infoObj = (t("contact.info") as unknown as any) || {};
   const INFO_CARDS = [
     {
-      icon: (
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.3h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16l.19.92z" />
-        </svg>
-      ),
       label: infoObj.call || "Appelez-nous",
       value: "+212 624 993 274",
       sub: infoObj.callSub || "Lun – Sam · 9h – 18h",
       link: "tel:+212624993274",
     },
     {
-      icon: (
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-          <polyline points="22,6 12,13 2,6" />
-        </svg>
-      ),
       label: infoObj.email || "Écrivez-nous",
       value: "contact@imadaghne.ma",
       sub: infoObj.emailSub || "Réponse sous 24h garantie",
       link: "mailto:contact@imadaghne.ma",
     },
     {
-      icon: (
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-        </svg>
-      ),
       label: infoObj.wa || "WhatsApp",
       value: "+212 624 993 274",
       sub: infoObj.waSub || "Réponse instantanée",
       link: "https://wa.me/212624993274",
     },
     {
-      icon: (
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
-        </svg>
-      ),
       label: infoObj.coop || "Notre Coopérative",
       value: infoObj.coopValue || "Maroc",
       sub: infoObj.coopSub || "Produits 100% naturels",
@@ -138,25 +117,26 @@ export default function ContactSection() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const submit = async (e: React.FormEvent) => {
+  const submit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
     setStatus("sending");
-    
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form)
-      });
-      if (res.ok) {
-        setStatus("success");
-      } else {
-        setStatus("error");
-      }
-    } catch (err) {
-      setStatus("error");
-    }
+
+    const msg = [
+      `Bonjour Imadaghne !`,
+      ``,
+      `👤 Nom : ${form.name}`,
+      `📧 Email : ${form.email}`,
+      form.phone ? `📞 Téléphone : ${form.phone}` : null,
+      form.service ? `📌 Sujet : ${form.service}` : null,
+      ``,
+      `💬 Message :`,
+      form.message,
+    ].filter(l => l !== null).join("\n");
+
+    window.open(`https://wa.me/212624993274?text=${encodeURIComponent(msg)}`, "_blank");
+    setStatus("success");
+    setForm({ name: "", email: "", phone: "", service: "", message: "" });
   };
 
   useEffect(() => {
@@ -228,9 +208,6 @@ export default function ContactSection() {
               }}
               onClick={() => card.link && window.open(card.link, "_blank")}
             >
-              <div className="w-12 h-12 flex items-center justify-center rounded-xl bg-[rgba(22,112,51,0.05)] text-[#167033] group-hover:bg-[#167033] group-hover:text-white transition-colors duration-300">
-                {card.icon}
-              </div>
               <div>
                 <div className="text-xs font-bold uppercase tracking-widest mb-1 text-[#895F37]">
                   {card.label}
@@ -305,17 +282,8 @@ export default function ContactSection() {
                     <label className="text-xs font-bold uppercase tracking-wider text-[#895F37] ml-2">
                       {l.service}
                     </label>
-                    <div className="relative">
-                      <select value={form.service} onChange={e => field("service")(e.target.value)}
-                        style={{ ...getStyle("other"), paddingRight: 36, cursor: "pointer" }} onFocus={focus} onBlur={e => blur(e, "other")}>
-                        <option value="">{l.serviceDefault}</option>
-                        {l.services.map(s => <option key={s} value={s}>{s}</option>)}
-                      </select>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#895F37" strokeWidth="2.5"
-                        className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
-                        <polyline points="6 9 12 15 18 9" />
-                      </svg>
-                    </div>
+                    <input type="text" value={form.service} onChange={e => field("service")(e.target.value)}
+                      placeholder={l.serviceDefault} style={getStyle("other")} onFocus={focus} onBlur={e => blur(e, "other")} />
                   </div>
                 </div>
 

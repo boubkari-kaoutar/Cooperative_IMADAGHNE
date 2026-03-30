@@ -129,15 +129,6 @@ export default function Navbar() {
                 onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
               />
             </div>
-            <span
-              className="text-base font-bold tracking-wide transition-colors duration-300 hidden sm:block"
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                color: scrolled ? "#167033" : "#FBF7F2",
-              }}
-            >
-              Imadaghne
-            </span>
           </Link>
 
           {/* CENTER — all nav links */}
